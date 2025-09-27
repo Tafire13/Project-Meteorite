@@ -35,8 +35,8 @@ public class MainPanel extends JPanel{
             alive[i] = true;
         }
         for (int i = 0; i < meteorite1X.length; i++) {
-            meteorite1X[i] = new Random().nextInt(740);
-            meteorite1Y[i] = new Random().nextInt(540);
+            meteorite1X[i] = new Random().nextInt(800-80);
+            meteorite1Y[i] = new Random().nextInt(600-80);
             indexMeteorite[i] = (int)(Math.random()*Meteorite.length);
 
             meteoriteDX[i] = new Random().nextInt(5)-2;

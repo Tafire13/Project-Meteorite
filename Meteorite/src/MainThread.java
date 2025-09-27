@@ -41,11 +41,11 @@ public class MainThread extends Thread{
                             panel.meteorite1Y[i] < panel.meteorite1Y[j] + 50 &&
                             panel.meteorite1Y[i] + 50 > panel.meteorite1Y[j]) {
 
-                        if (panel.speed[i] > panel.speed[j]) {
-                            panel.speed[i] = panel.speed[i] - panel.speed[j];
+                        if (panel.speed[i] < panel.speed[j]) {
+                            panel.speed[i] = panel.speed[i] + panel.speed[j];
                             panel.alive[j] = false;
-                        } else if (panel.speed[i] < panel.speed[j]) {
-                            panel.speed[j] = panel.speed[j] - panel.speed[i];
+                        } else if (panel.speed[i] > panel.speed[j]) {
+                            panel.speed[j] = panel.speed[j] + panel.speed[i];
                             panel.alive[i] = false;
                         } else {
                             panel.alive[i] = false;
