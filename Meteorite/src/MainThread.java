@@ -17,10 +17,6 @@ public class MainThread extends Thread{
             panel.meteoriteX[index] += panel.meteoriteDX[index];
             panel.meteoriteY[index] += panel.meteoriteDY[index];
 
-            if(panel.meteoriteX[index] == panel.meteoriteY[index]){
-
-            }
-
             if (panel.meteoriteX[index] < 0 || panel.meteoriteX[index] + 50 > panel.getWidth()) {
                 panel.meteoriteDX[index] = -panel.meteoriteDX[index];
                 if(panel.speed[index] > 5) panel.speed[index]--;
