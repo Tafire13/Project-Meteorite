@@ -12,44 +12,47 @@ public class MainThread extends Thread{
     @Override
     public void run() {
         while(true){
-            panel.meteorite1X[index] += panel.meteoriteDX[index];
-            panel.meteorite1Y[index] += panel.meteoriteDY[index];
+            if (!panel.alive[index]) return;
 
-            if(panel.meteorite1X[index] == panel.meteorite1Y[index]){
+            panel.meteoriteX[index] += panel.meteoriteDX[index];
+            panel.meteoriteY[index] += panel.meteoriteDY[index];
+
+            if(panel.meteoriteX[index] == panel.meteoriteY[index]){
 
             }
 
-            if (panel.meteorite1X[index] < 0 || panel.meteorite1X[index] + 50 > panel.getWidth()) {
+            if (panel.meteoriteX[index] < 0 || panel.meteoriteX[index] + 50 > panel.getWidth()) {
                 panel.meteoriteDX[index] = -panel.meteoriteDX[index];
                 if(panel.speed[index] > 5) panel.speed[index]--;
 
             }
-            if (panel.meteorite1Y[index] < 0 || panel.meteorite1Y[index] + 50 > panel.getHeight()) {
+            if (panel.meteoriteY[index] < 0 || panel.meteoriteY[index] + 50 > panel.getHeight()) {
                 panel.meteoriteDY[index] = -panel.meteoriteDY[index];
                 if(panel.speed[index] > 5) panel.speed[index]--;
 
             }
 
-            for (int i = 0; i < panel.meteorite1X.length; i++) {
+            for (int i = 0; i < panel.meteoriteX.length; i++) {
+                if (i == index) continue;
                 if (!panel.alive[i]) continue;
+                if (!panel.alive[index]) break;
 
-                for (int j = i + 1; j < panel.meteorite1X.length; j++) {
-                    if (!panel.alive[j]) continue;
+                if (panel.meteoriteX[index] < panel.meteoriteX[i] + 50 &&
+                        panel.meteoriteX[index] + 50 > panel.meteoriteX[i] &&
+                        panel.meteoriteY[index] < panel.meteoriteY[i] + 50 &&
+                        panel.meteoriteY[index] + 50 > panel.meteoriteY[i]) {
 
-                    if (panel.meteorite1X[i] < panel.meteorite1X[j] + 50 &&
-                            panel.meteorite1X[i] + 50 > panel.meteorite1X[j] &&
-                            panel.meteorite1Y[i] < panel.meteorite1Y[j] + 50 &&
-                            panel.meteorite1Y[i] + 50 > panel.meteorite1Y[j]) {
-
-                        if (panel.speed[i] < panel.speed[j]) {
-                            panel.speed[i] = panel.speed[i] + panel.speed[j];
-                            panel.alive[j] = false;
-                        } else if (panel.speed[i] > panel.speed[j]) {
-                            panel.speed[j] = panel.speed[j] + panel.speed[i];
-                            panel.alive[i] = false;
+                    if (panel.speed[index] < panel.speed[i]) {
+                        panel.speed[index] += panel.speed[i];
+                        panel.alive[i] = false;
+                    } else if (panel.speed[index] > panel.speed[i]) {
+                        panel.speed[i] += panel.speed[index];
+                        panel.alive[index] = false;
+                    } else {
+                        if (Math.random() < 0.5) {
+                            panel.alive[index] = false;
                         } else {
                             panel.alive[i] = false;
-                            panel.alive[j] = false;
                         }
                     }
                 }
