@@ -10,21 +10,30 @@ public class MainPanel extends JPanel{
     Image Meteorite1 = Toolkit.getDefaultToolkit().createImage(System.getProperty("user.dir")+ File.separator+"src"+ File.separator+"Meteorite1.png");
     Image Meteorite2 = Toolkit.getDefaultToolkit().createImage(System.getProperty("user.dir")+ File.separator+"src"+ File.separator+"Meteorite2.png");
     Image Meteorite3 = Toolkit.getDefaultToolkit().createImage(System.getProperty("user.dir")+ File.separator+"src"+ File.separator+"Meteorite3.png");
-    int []meteorite1X = new int[5];
-    int []meteorite1Y = new int[5];
-    int[] meteoriteDX = new int[5];
-    int[] meteoriteDY = new int[5];
-    int[] speed = new int[5];
+    int []meteorite1X;
+    int []meteorite1Y;
+    int[] meteoriteDX;
+    int[] meteoriteDY;
+    int[] speed;
+    boolean[] alive;
     Image[] Meteorite ={
             Meteorite1, Meteorite2,Meteorite3
     };
-    int[] indexMeteorite = new int[5];
-    MainThread[] ThreadMeteor = new MainThread[5];
-    MainPanel() {
+    int[] indexMeteorite;
+    MainThread[] ThreadMeteor;
+    MainPanel(int MeteoriteCount) {
         setBackground(Color.black);
+        meteorite1X = new int[MeteoriteCount];
+        meteorite1Y = new int[MeteoriteCount];
+        meteoriteDX = new int[MeteoriteCount];
+        meteoriteDY = new int[MeteoriteCount];
+        speed = new int[MeteoriteCount];
+        indexMeteorite = new int[MeteoriteCount];
+        ThreadMeteor = new MainThread[MeteoriteCount];
+        alive = new boolean[MeteoriteCount];
         for (int i = 0; i < meteorite1X.length; i++) {
-            meteorite1X[i] = new Random().nextInt(740)+40;
-            meteorite1Y[i] = new Random().nextInt(540)+40;
+            meteorite1X[i] = new Random().nextInt(740)+10;
+            meteorite1Y[i] = new Random().nextInt(540)+10;
             indexMeteorite[i] = (int)(Math.random()*Meteorite.length);
 
             meteoriteDX[i] = new Random().nextInt(5)-2;
@@ -34,7 +43,7 @@ public class MainPanel extends JPanel{
 
             speed[i] = new Random().nextInt(50)+1;
 
-            ThreadMeteor[i] = new MainThread(this, i, speed[i]);
+            ThreadMeteor[i] = new MainThread(this, i);
             ThreadMeteor[i].start();
         }
     }
@@ -44,8 +53,6 @@ public class MainPanel extends JPanel{
         super.paintComponent(g);
         for (int i = 0; i < meteorite1X.length; i++) {
             g.drawImage(Meteorite[indexMeteorite[i]], meteorite1X[i], meteorite1Y[i],50,50, this);
-
-
         }
     }
 

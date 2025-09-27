@@ -4,11 +4,9 @@ import java.util.Random;
 public class MainThread extends Thread{
     MainPanel panel;
     int index;
-    int speed;
-    MainThread(MainPanel panel, int index, int speed) {
+    MainThread(MainPanel panel, int index) {
         this.panel = panel;
         this.index = index;
-        this.speed = speed;
     }
 
     @Override
@@ -19,16 +17,19 @@ public class MainThread extends Thread{
 
             if (panel.meteorite1X[index] < 0 || panel.meteorite1X[index] + 50 > panel.getWidth()) {
                 panel.meteoriteDX[index] = -panel.meteoriteDX[index];
+                if(panel.speed[index] > 0) panel.speed[index]--;
 
             }
             if (panel.meteorite1Y[index] < 0 || panel.meteorite1Y[index] + 50 > panel.getHeight()) {
                 panel.meteoriteDY[index] = -panel.meteoriteDY[index];
+                if(panel.speed[index] > 0) panel.speed[index]--;
+
             }
 
 
                 panel.repaint();
             try {
-                sleep(speed);
+                sleep(panel.speed[index]);
             }catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
