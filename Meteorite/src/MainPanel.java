@@ -31,9 +31,12 @@ public class MainPanel extends JPanel{
         indexMeteorite = new int[MeteoriteCount];
         ThreadMeteor = new MainThread[MeteoriteCount];
         alive = new boolean[MeteoriteCount];
+        for (int i = 0; i < alive.length; i++) {
+            alive[i] = true;
+        }
         for (int i = 0; i < meteorite1X.length; i++) {
-            meteorite1X[i] = new Random().nextInt(740)+10;
-            meteorite1Y[i] = new Random().nextInt(540)+10;
+            meteorite1X[i] = new Random().nextInt(740);
+            meteorite1Y[i] = new Random().nextInt(540);
             indexMeteorite[i] = (int)(Math.random()*Meteorite.length);
 
             meteoriteDX[i] = new Random().nextInt(5)-2;
@@ -42,7 +45,6 @@ public class MainPanel extends JPanel{
             if (meteoriteDY[i] == 0) meteoriteDY[i] = 1;
 
             speed[i] = new Random().nextInt(50)+1;
-
             ThreadMeteor[i] = new MainThread(this, i);
             ThreadMeteor[i].start();
         }
@@ -52,7 +54,9 @@ public class MainPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < meteorite1X.length; i++) {
-            g.drawImage(Meteorite[indexMeteorite[i]], meteorite1X[i], meteorite1Y[i],50,50, this);
+            if(alive[i]){
+                g.drawImage(Meteorite[indexMeteorite[i]], meteorite1X[i], meteorite1Y[i],50,50, this);
+            }
         }
     }
 
