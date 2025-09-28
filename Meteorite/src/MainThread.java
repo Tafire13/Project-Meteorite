@@ -40,26 +40,39 @@ public class MainThread extends Thread{
 
                     if (panel.speed[index] < panel.speed[i]) {
                         panel.speed[index] += panel.speed[i];
-                        panel.alive[i] = false;
+                        killMeteor(i);
                     } else if (panel.speed[index] > panel.speed[i]) {
                         panel.speed[i] += panel.speed[index];
-                        panel.alive[index] = false;
+                        killMeteor(index);
                     } else {
                         if (Math.random() < 0.5) {
-                            panel.alive[index] = false;
+                            killMeteor(index);
                         } else {
-                            panel.alive[i] = false;
+                            killMeteor(i);
                         }
                     }
                 }
             }
 
-                panel.repaint();
+
+            panel.repaint();
             try {
                 sleep(panel.speed[index]);
             }catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
+    }
+    private void killMeteor(int i) {
+        panel.alive[i] = false;
+        panel.blast[i] = false;
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {}
+            panel.blast[i] = true;
+            panel.repaint();
+        }).start();
     }
 }
